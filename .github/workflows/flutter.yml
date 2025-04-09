@@ -16,25 +16,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget unzip
-          
-          # Descargar la última versión estable de Flutter
-          wget https://storage.googleapis.com/download.flutter.io/flutter_linux_3.7.0-stable.tar.xz
-          
-          # Extraer y mover Flutter a la carpeta adecuada
-          tar xf flutter_linux_3.7.0-stable.tar.xz
-          sudo mv flutter /opt/
-          
-          # Configurar las variables de entorno
-          export PATH="/opt/flutter/bin:$PATH"
-          
-          # Ejecutar flutter doctor para verificar la instalación
-          flutter doctor
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.7.0'
 
-      - name: Install Flutter dependencies
+      - name: Install dependencies
         run: flutter pub get
 
       - name: Build APK
